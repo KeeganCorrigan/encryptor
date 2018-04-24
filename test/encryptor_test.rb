@@ -21,7 +21,27 @@ class EncryptorTest < Minitest::Test
     assert_equal("hello", decryption)
   end
 
-  # test it keeps case correct
-  # test it can encrypt a sentence
-  # test it respects punctuation
+  def test_it_keeps_case_correct_when_encrypting
+    encryptor = Encryptor.new
+    encryption = encryptor.encrypt("HeLlo")
+    assert_equal("UrYyb", encryption)
+  end
+
+  def test_it_keeps_case_correct_when_decrypting
+    decryptor = Encryptor.new
+    decryption = decryptor.decrypt("UrYyb")
+    assert_equal("HeLlo", decryption)
+  end
+
+  def test_encryptor_keeps_non_letters_the_same
+    encryptor = Encryptor.new
+    encryption = encryptor.encrypt("Hello World.")
+    assert_equal("Uryyb Jbeyq.", encryption)
+  end
+
+  def test_decryptor_keeps_letters_the_same
+    decryptor = Encryptor.new
+    decryption = decryptor.decrypt("Uryyb Jbeyq.")
+    assert_equal("Hello World.", decryption)
+  end
 end

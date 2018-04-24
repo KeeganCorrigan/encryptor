@@ -33,14 +33,33 @@ class Encryptor
   end
 
   def encrypt(word)
-    letters(word).map { |l| cipher[l] }.join
+    encrypted = letters(word).map do |l|
+      if l == l.upcase
+        if cipher.has_key?(l.downcase)
+          cipher[l.downcase].upcase
+        else
+          l
+        end
+      else
+        cipher[l]
+      end
+    end
+    encrypted.join
   end
 
   def decrypt(word)
-    letters(word).map { |l| cipher.key(l) }.join
+    decrypted = letters(word).map do |l|
+      if l == l.upcase
+        if cipher.has_value?(l.downcase)
+          cipher.key(l.downcase).upcase
+        else
+          l
+        end
+      else
+        cipher.key(l)
+      end
     end
-
-    letters.join
+    decrypted.join
   end
 
   def letters(word)
